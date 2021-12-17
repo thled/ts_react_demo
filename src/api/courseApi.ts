@@ -26,7 +26,7 @@ export function getCourseBySlug(slug: string) {
     .catch(handleError);
 }
 
-interface Course {
+export interface Course {
   id: number;
   title: string;
   slug: string;
