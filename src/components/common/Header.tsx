@@ -1,7 +1,15 @@
+import { NavLink } from "react-router-dom";
+
 function Header() {
+  const activeStyle = ({ isActive }: { isActive: boolean }) => ({
+    color: isActive ? 'orange' : 'black'
+  });
+
   return (
     <nav>
-      <a href="/">Home</a> | <a href="/courses">Courses</a> | <a href="/about">About</a>
+      <NavLink style={activeStyle} to="/">Home</NavLink> {" | "}
+      <NavLink style={activeStyle} to="/courses">Courses</NavLink> {" | "}
+      <NavLink style={activeStyle} to="/about">About</NavLink>
     </nav>
   );
 }
