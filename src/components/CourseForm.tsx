@@ -1,8 +1,10 @@
+import { ChangeEvent } from "react";
 import { Course } from "../api/courseApi";
 
 type CourseFormProps = {
    course: Course; 
-   onTitleChange: (event: any) => void;
+   onInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
+   onSelectChange: (event: ChangeEvent<HTMLSelectElement>) => void;
 };
 
 function CourseForm(props: CourseFormProps) {
@@ -14,7 +16,7 @@ function CourseForm(props: CourseFormProps) {
           <input
             type="text"
             id="title"
-            onChange={props.onTitleChange}
+            onChange={props.onInputChange}
             name="title"
             className="form-control"
             value={props.course.title}
@@ -28,7 +30,7 @@ function CourseForm(props: CourseFormProps) {
           <select
             id="author"
             name="authorId"
-            // onChange={props.onChange}
+            onChange={props.onSelectChange}
             className="form-control"
             value={props.course.authorId || ""}
           >
@@ -45,6 +47,7 @@ function CourseForm(props: CourseFormProps) {
           <input
             type="text"
             id="category"
+            onChange={props.onInputChange}
             name="category"
             className="form-control"
             value={props.course.category}
