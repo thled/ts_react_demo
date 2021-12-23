@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, FormEvent } from "react";
 import { Course } from "../api/courseApi";
 import SelectInput from "./common/SelectInput";
 import TextInput from "./common/TextInput";
@@ -7,11 +7,12 @@ type CourseFormProps = {
   course: Course;
   onInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSelectChange: (event: ChangeEvent<HTMLSelectElement>) => void;
+  onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
 
 function CourseForm(props: CourseFormProps) {
   return (
-    <form>
+    <form onSubmit={props.onSubmit}>
 
       <TextInput
         id="title"

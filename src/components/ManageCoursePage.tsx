@@ -1,6 +1,7 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { Course } from "../api/courseApi";
 import CourseForm from "./CourseForm";
+import * as courseApi from "../api/courseApi";
 
 const ManageCoursePage = () => {
   const newCourse: Course = {
@@ -27,6 +28,11 @@ const ManageCoursePage = () => {
     });
   }
 
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    courseApi.saveCourse(course);
+  }
+
   return (
     <>
       <h2>Manage Course</h2>
@@ -34,6 +40,7 @@ const ManageCoursePage = () => {
         course={course}
         onInputChange={handleInputChange}
         onSelectChange={handleSelectChange}
+        onSubmit={handleSubmit}
       />
     </>
   );
