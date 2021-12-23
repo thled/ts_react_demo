@@ -1,59 +1,46 @@
 import { ChangeEvent } from "react";
 import { Course } from "../api/courseApi";
+import SelectInput from "./common/SelectInput";
+import TextInput from "./common/TextInput";
 
 type CourseFormProps = {
-   course: Course; 
-   onInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
-   onSelectChange: (event: ChangeEvent<HTMLSelectElement>) => void;
+  course: Course;
+  onInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onSelectChange: (event: ChangeEvent<HTMLSelectElement>) => void;
 };
 
 function CourseForm(props: CourseFormProps) {
   return (
     <form>
-      <div className="form-group">
-        <label htmlFor="title">Title</label>
-        <div className="field">
-          <input
-            type="text"
-            id="title"
-            onChange={props.onInputChange}
-            name="title"
-            className="form-control"
-            value={props.course.title}
-          />
-        </div>
-      </div>
 
-      <div className="form-group">
-        <label htmlFor="author">Author</label>
-        <div className="field">
-          <select
-            id="author"
-            name="authorId"
-            onChange={props.onSelectChange}
-            className="form-control"
-            value={props.course.authorId || ""}
-          >
-            <option value="" />
-            <option value="1">Cory House</option>
-            <option value="2">Scott Allen</option>
-          </select>
-        </div>
-      </div>
+      <TextInput
+        id="title"
+        name="title"
+        label="Title"
+        value={props.course.title}
+        onChange={props.onInputChange}
+      />
 
-      <div className="form-group">
-        <label htmlFor="category">Category</label>
-        <div className="field">
-          <input
-            type="text"
-            id="category"
-            onChange={props.onInputChange}
-            name="category"
-            className="form-control"
-            value={props.course.category}
-          />
-        </div>
-      </div>
+      <SelectInput
+        id="author"
+        label="Author"
+        name="authorId"
+        value={props.course.authorId || ""}
+        onChange={props.onSelectChange}
+        options={[
+          { value: "", label: "Select Author" },
+          { value: "1", label: "Cory House" },
+          { value: "2", label: "Scott Allen" },
+        ]}
+      />
+
+      <TextInput
+        id="category"
+        label="Category"
+        name="category"
+        value={props.course.category}
+        onChange={props.onInputChange}
+      />
 
       <input type="submit" value="Save" className="btn btn-primary" />
     </form>

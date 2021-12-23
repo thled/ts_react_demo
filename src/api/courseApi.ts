@@ -27,10 +27,10 @@ export function getCourseBySlug(slug: string) {
 }
 
 export interface Course {
-  id: number | null;
+  id: string | null;
   title: string;
   slug: string;
-  authorId: number | null;
+  authorId: string | null;
   category: string;
 }
 
