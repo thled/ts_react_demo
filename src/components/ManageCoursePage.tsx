@@ -1,8 +1,8 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Course } from "../api/courseApi";
 import CourseForm, { FormErrors } from "./CourseForm";
 import * as courseApi from "../api/courseApi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const ManageCoursePage = () => {
@@ -23,6 +23,15 @@ const ManageCoursePage = () => {
   const [course, setCourse] = useState(newCourse);
   const [errors, setErrors] = useState(noErrors);
   const navigate = useNavigate();
+  const { slug } = useParams();
+
+  useEffect(() => {
+    if (typeof slug !== "string") {
+      return;
+    }
+    courseApi.getCourseBySlug(slug)
+      .then(_course => setCourse(_course));
+  }, [slug]);
 
   function formIsValid() {
     const _errors: FormErrors = { ...noErrors };
