@@ -12,11 +12,17 @@ type SelectInputProps = {
   value: string,
   onChange: (event: ChangeEvent<HTMLSelectElement>) => void,
   options: Option[],
+  error: string;
 }
 
 function SelectInput(props: SelectInputProps) {
+  let wrapperClass = 'form-group';
+  if (hasError(props.error)) {
+    wrapperClass += ' has-error';
+  }
+
   return (
-    <div className="form-group">
+    <div className={wrapperClass}>
       <label htmlFor={props.id}>{props.label}</label>
       <div className="field">
         <select
@@ -33,8 +39,15 @@ function SelectInput(props: SelectInputProps) {
           ))}
         </select>
       </div>
+      {hasError(props.error) && (
+        <div className="alert alert-danger">{props.error}</div>
+      )}
     </div>
   );
+}
+
+function hasError(error: string) {
+  return error.length > 0;
 }
 
 export default SelectInput;

@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Course } from "../api/courseApi";
-import CourseForm from "./CourseForm";
+import CourseForm, { FormErrors } from "./CourseForm";
 import * as courseApi from "../api/courseApi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -14,8 +14,40 @@ const ManageCoursePage = () => {
     category: ""
   };
 
+  const noErrors: FormErrors = {
+    title: "",
+    authorId: "",
+    category: ""
+  };
+
   const [course, setCourse] = useState(newCourse);
+  const [errors, setErrors] = useState(noErrors);
   const navigate = useNavigate();
+
+  function formIsValid() {
+    const _errors: FormErrors = { ...noErrors };
+
+    let hasError = false;
+    if (course.title.length < 1) {
+      hasError = true;
+      _errors.title = "Title is required.";
+    }
+    if (
+      typeof course.authorId !== "string" ||
+      course.authorId.length < 1
+    ) {
+      hasError = true;
+      _errors.authorId = "Author is required.";
+    }
+    if (course.category.length < 1) {
+      hasError = true;
+      _errors.category = "Category is required.";
+    }
+
+    setErrors(_errors);
+
+    return !hasError;
+  }
 
   function handleInputChange({ target }: ChangeEvent<HTMLInputElement>) {
     setCourse({
@@ -33,6 +65,10 @@ const ManageCoursePage = () => {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!formIsValid()) {
+      return;
+    }
+
     courseApi.saveCourse(course)
       .then(() => {
         navigate("/courses");
@@ -44,6 +80,7 @@ const ManageCoursePage = () => {
     <>
       <h2>Manage Course</h2>
       <CourseForm
+        errors={errors}
         course={course}
         onInputChange={handleInputChange}
         onSelectChange={handleSelectChange}

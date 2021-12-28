@@ -3,7 +3,14 @@ import { Course } from "../api/courseApi";
 import SelectInput from "./common/SelectInput";
 import TextInput from "./common/TextInput";
 
+export type FormErrors = {
+  title: string;
+  authorId: string;
+  category: string;
+};
+
 type CourseFormProps = {
+  errors: FormErrors;
   course: Course;
   onInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSelectChange: (event: ChangeEvent<HTMLSelectElement>) => void;
@@ -20,6 +27,7 @@ function CourseForm(props: CourseFormProps) {
         label="Title"
         value={props.course.title}
         onChange={props.onInputChange}
+        error={props.errors.title}
       />
 
       <SelectInput
@@ -33,6 +41,7 @@ function CourseForm(props: CourseFormProps) {
           { value: "1", label: "Cory House" },
           { value: "2", label: "Scott Allen" },
         ]}
+        error={props.errors.authorId}
       />
 
       <TextInput
@@ -41,6 +50,7 @@ function CourseForm(props: CourseFormProps) {
         name="category"
         value={props.course.category}
         onChange={props.onInputChange}
+        error={props.errors.category}
       />
 
       <input type="submit" value="Save" className="btn btn-primary" />
