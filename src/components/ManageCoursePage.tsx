@@ -3,6 +3,7 @@ import { Course } from "../api/courseApi";
 import CourseForm from "./CourseForm";
 import * as courseApi from "../api/courseApi";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const ManageCoursePage = () => {
   const newCourse: Course = {
@@ -33,7 +34,10 @@ const ManageCoursePage = () => {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     courseApi.saveCourse(course)
-      .then(() => navigate("/courses"));
+      .then(() => {
+        navigate("/courses");
+        toast.success("Course saved.");
+      });
   }
 
   return (
