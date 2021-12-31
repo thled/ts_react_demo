@@ -1,3 +1,4 @@
 export enum Action {
   CREATE_COURSE = 'CREATE_COURSE',
+  LOAD_COURSES = 'LOAD_COURSES',
 }

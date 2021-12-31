@@ -7,6 +7,11 @@ export type CreateCourseAction = {
   course: courseApi.Course;
 };
 
+export type LoadCoursesAction = {
+  actionType: Action.LOAD_COURSES;
+  courses: courseApi.Course[];
+};
+
 export function saveCourse(course: courseApi.Course) {
   return courseApi.saveCourse(course)
     .then((savedCourse: courseApi.Course) => {
@@ -14,6 +19,16 @@ export function saveCourse(course: courseApi.Course) {
         actionType: Action.CREATE_COURSE,
         course: savedCourse,
       } as CreateCourseAction);
+    });
+}
+
+export function loadCourses() {
+  return courseApi.getCourses()
+    .then((courses: courseApi.Course[]) => {
+      dispatcher.dispatch({
+        actionType: Action.LOAD_COURSES,
+        courses: courses,
+      } as LoadCoursesAction);
     });
 }
 
