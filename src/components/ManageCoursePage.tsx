@@ -4,7 +4,7 @@ import CourseForm, { FormErrors } from "./CourseForm";
 import courseStore from "../stores/courseStore";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { saveCourse } from "../actions/courseActions";
+import { loadCourses, saveCourse } from "../actions/courseActions";
 
 const ManageCoursePage = () => {
   const newCourse: Course = {
@@ -22,18 +22,30 @@ const ManageCoursePage = () => {
   };
 
   const [course, setCourse] = useState(newCourse);
+  const [courses, setCourses] = useState(courseStore.getCourses());
   const [errors, setErrors] = useState(noErrors);
   const navigate = useNavigate();
   const { slug } = useParams();
 
   useEffect(() => {
+    courseStore.addChangeListener(onChange);
+
+    if (courses.length === 0) {
+      loadCourses();
+    }
     if (typeof slug !== "string") {
       return;
     }
-     const _course = courseStore.getCourseBySlug(slug);
-     if (_course === undefined) return;
-     setCourse(_course);
-  }, [slug]);
+    const _course = courseStore.getCourseBySlug(slug);
+    if (_course === undefined) return;
+    setCourse(_course);
+
+    return () => courseStore.removeChangeListener(onChange);
+  }, [courses.length, slug]);
+
+  function onChange() {
+    setCourses(courseStore.getCourses());
+  }
 
   function formIsValid() {
     const _errors: FormErrors = { ...noErrors };
