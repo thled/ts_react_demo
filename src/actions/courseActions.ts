@@ -16,7 +16,9 @@ export function saveCourse(course: courseApi.Course) {
   return courseApi.saveCourse(course)
     .then((savedCourse: courseApi.Course) => {
       dispatcher.dispatch({
-        actionType: Action.CREATE_COURSE,
+        actionType: course.id
+          ? Action.UPDATE_COURSE
+          : Action.CREATE_COURSE,
         course: savedCourse,
       } as CreateCourseAction);
     });

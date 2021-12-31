@@ -36,6 +36,12 @@ dispatcher.register((action: any) => {
       _courses.push(action.course);
       store.emitChange();
       break;
+    case Action.UPDATE_COURSE:
+      _courses = _courses.map((_course) =>
+        _course.id === action.course.id ? action.course : _course
+      );
+      store.emitChange();
+      break;
     case Action.LOAD_COURSES:
       _courses = action.courses;
       store.emitChange();
