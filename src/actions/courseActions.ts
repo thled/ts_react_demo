@@ -12,6 +12,11 @@ export type LoadCoursesAction = {
   courses: courseApi.Course[];
 };
 
+export type DeleteCourseAction = {
+  actionType: Action.DELETE_COURSE;
+  courseId: string;
+};
+
 export function saveCourse(course: courseApi.Course) {
   return courseApi.saveCourse(course)
     .then((savedCourse: courseApi.Course) => {
@@ -31,6 +36,16 @@ export function loadCourses() {
         actionType: Action.LOAD_COURSES,
         courses: courses,
       } as LoadCoursesAction);
+    });
+}
+
+export function deleteCourse(courseId: string) {
+  return courseApi.deleteCourse(courseId)
+    .then(() => {
+      dispatcher.dispatch({
+        actionType: Action.DELETE_COURSE,
+        courseId: courseId,
+      } as DeleteCourseAction);
     });
 }
 

@@ -46,7 +46,7 @@ export function saveCourse(course: Course) {
     .catch(handleError);
 }
 
-export function deleteCourse(courseId: number) {
+export function deleteCourse(courseId: string) {
   return fetch(apiUrl + courseId, {
     method: "DELETE"
   })

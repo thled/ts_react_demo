@@ -3,6 +3,7 @@ import { Course } from "../api/courseApi";
 
 type CourseListProps = {
   courses: Course[];
+  deleteCourse: (course: Course) => void;
 };
 
 function CourseList(props: CourseListProps) {
@@ -13,6 +14,7 @@ function CourseList(props: CourseListProps) {
           <th>Title</th>
           <th>Author ID</th>
           <th>Category</th>
+          <th>Operations</th>
         </tr>
       </thead>
       <tbody>
@@ -26,6 +28,14 @@ function CourseList(props: CourseListProps) {
               </td>
               <td>{course.authorId}</td>
               <td>{course.category}</td>
+              <td>
+                <button
+                  className="btn btn-outline-danger"
+                  onClick={() => props.deleteCourse(course)}
+                >
+                  Delete
+                </button>
+              </td>
             </tr>
           );
         })}

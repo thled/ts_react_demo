@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { loadCourses } from "../actions/courseActions";
+import { deleteCourse, loadCourses } from "../actions/courseActions";
 import { Course } from "../api/courseApi";
 import courseStore from "../stores/courseStore";
 import CourseList from "./CourseList";
@@ -21,13 +21,18 @@ function CoursesPage() {
     setCourses(courseStore.getCourses());
   }
 
+  function onDeleteCourse(course: Course) {
+    if (course.id === null) return;
+    deleteCourse(course.id);
+  }
+
   return (
     <>
       <h2>Courses</h2>
       <Link to="/course" className="btn btn-primary">
         Add Course
       </Link>
-      <CourseList courses={courses} />
+      <CourseList courses={courses} deleteCourse={onDeleteCourse} />
     </>
   );
 };

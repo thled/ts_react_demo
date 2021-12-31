@@ -46,6 +46,12 @@ dispatcher.register((action: any) => {
       _courses = action.courses;
       store.emitChange();
       break;
+    case Action.DELETE_COURSE:
+      _courses = _courses.filter((_course) =>
+        _course.id !== action.courseId
+      );
+      store.emitChange();
+      break;
     default:
       break;
   }
