@@ -1,9 +1,10 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Course } from "../api/courseApi";
 import CourseForm, { FormErrors } from "./CourseForm";
-import * as courseApi from "../api/courseApi";
+import courseStore from "../stores/courseStore";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { saveCourse } from "../actions/courseActions";
 
 const ManageCoursePage = () => {
   const newCourse: Course = {
@@ -29,8 +30,9 @@ const ManageCoursePage = () => {
     if (typeof slug !== "string") {
       return;
     }
-    courseApi.getCourseBySlug(slug)
-      .then(_course => setCourse(_course));
+     const _course = courseStore.getCourseBySlug(slug);
+     if (_course === undefined) return;
+     setCourse(_course);
   }, [slug]);
 
   function formIsValid() {
@@ -78,7 +80,7 @@ const ManageCoursePage = () => {
       return;
     }
 
-    courseApi.saveCourse(course)
+    saveCourse(course)
       .then(() => {
         navigate("/courses");
         toast.success("Course saved.");

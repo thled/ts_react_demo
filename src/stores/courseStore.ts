@@ -36,6 +36,8 @@ dispatcher.register((action: any) => {
       _courses.push(action.course);
       store.emitChange();
       break;
+    default:
+      break;
   }
 });
 

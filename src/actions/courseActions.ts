@@ -8,7 +8,7 @@ export type CreateCourseAction = {
 };
 
 export function saveCourse(course: courseApi.Course) {
-  courseApi.saveCourse(course)
+  return courseApi.saveCourse(course)
     .then((savedCourse: courseApi.Course) => {
       dispatcher.dispatch({
         actionType: Action.CREATE_COURSE,
